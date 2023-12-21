@@ -12,5 +12,5 @@
     "default_popup": "holdon_popup.html",
     "default_icon": "placeholder.png"
   },
-  "web_accessible_resources": ["custom.html", "url-blocker.js"]
+  "web_accessible_resources": ["url-blocker.html", "url-blocker.js"]
 }
