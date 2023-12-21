@@ -5,44 +5,74 @@
  * @returns {number}
  */
 function startCountdownTimer(delay) {
+  const deltaMS = 100;
   const timer = document.querySelector("#timer");
-  let delay_counter = decrementCounter(delay/1000, timer);
+  let counterValue = handleTimer(delay, deltaMS, timer);
 
   return setInterval(() => {
-    delay_counter = decrementCounter(delay_counter, timer);
-  }, 1000);
+    // delay_counter = updateCounterText(delay_counter, timer);
+    counterValue = handleTimer(counterValue, deltaMS, timer)
+  }, deltaMS);
+}
+
+function handleTimer(currValueMS, deltaMS, timer) {
+
+  if (document.hidden) {
+    return currValueMS;
+  }
+
+  const newValue = currValueMS - deltaMS;
+  if (newValue <= 0) {
+    handleTimerEnd();
+  }
+
+  updateCounterText(formatTime(newValue), timer);
+
+  return newValue;
+}
+
+let redirected = false; //< Global flag to track, if the redirect has already been issued, to not spam it
+
+/**
+ * React to timer end
+ *
+ * Currently it redirects to the originalUrl. Sets a global flag,
+ * so that the redirect action is not issued multiple times.
+ */
+function handleTimerEnd() {
+  if (!redirected) {
+    window.location.href = originalUrl;
+    redirected = true;
+  }
+}
+
+/**
+ * Format time in [ms] to [s]
+ *
+ * @param {number} timeMS - Time value in milliseconds
+ * @returns {string} Time value string in seconds, rounded up to closes second
+ */
+function formatTime(timeMS) {
+  return Math.ceil(timeMS / 1000).toFixed(0).toString();
+
+
 }
 
 /**
  * Update timer HTML with decremented oldValue
  *
- * @param {number} oldValue - Previous value, to be decremented
+ * @param {string} newValue - New value to display
  * @param {Element} timer - Timer HTML Element
- * @returns {number} decremented value
  */
-function decrementCounter(oldValue, timer) {
-  timer.innerHTML = oldValue.toFixed(0).toString()
-  oldValue -= 1;
-  return oldValue;
+function updateCounterText(newValue, timer) {
+  timer.innerHTML = newValue;
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  const originalUrl = message.originalUrl;
-  console.log('Original URL:', originalUrl);
-  // const newUrl = new URL(originalUrl)
-  // newUrl.searchParams.append("holdon", "true"); console.log(toString(newUrl))
-  // console.log(newUrl.toString())
-  
-  const delay = 5000;
-  
+const currentURL = new URL(document.URL.toString())
+const originalUrl = decodeURIComponent(currentURL.searchParams.get("url"))
+console.log('current URL:', currentURL);
+console.log('Original URL:', originalUrl);
 
-  startCountdownTimer(delay);
+const delay = 5000;
 
-  // After a specified delay, redirect back to the original URL
-  setTimeout(() => {
-    // const newUrl = new URL(originalUrl).searchParams.append("holdon", "true");
-    // console.log(newUrl.toString())
-
-    window.location.href = originalUrl;
-  }, delay);
-});
+startCountdownTimer(delay);

@@ -12,15 +12,9 @@ chrome.webRequest.onBeforeRequest.addListener(
 
         redirectedStatus[tabId] = true;
 
-        setTimeout(() => {
-          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const tabId = tabs[0]?.id;
-            if (tabId) {
-              chrome.tabs.sendMessage(tabId, { originalUrl: details.url });
-            }
-          });
-        }, 700)
-        return { redirectUrl: chrome.runtime.getURL("url-blocker.html") };
+        const newURL = new URL(chrome.runtime.getURL("url-blocker.html"));
+        newURL.searchParams.set("url", encodeURIComponent(details.url))
+        return { redirectUrl:  newURL.toString()};
       }
     }
     return { cancel: false };
