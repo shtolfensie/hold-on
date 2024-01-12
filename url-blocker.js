@@ -1,6 +1,8 @@
 /**
  * Start timer countdown interval
  *
+ * Also handles pausing/playing the CSS breathing animation
+ *
  * @param {number} delay - Total delay to count down
  * @returns {number}
  */
@@ -9,9 +11,12 @@ function startCountdownTimer(delay) {
   const timer = document.querySelector("#timer");
   let counterValue = handleTimer(delay, deltaMS, timer);
 
+  const breathingCircle = document.querySelector(".breathing-circle");
+
   return setInterval(() => {
     // delay_counter = updateCounterText(delay_counter, timer);
     counterValue = handleTimer(counterValue, deltaMS, timer)
+    handleAnimation(breathingCircle);
   }, deltaMS);
 }
 
@@ -69,6 +74,20 @@ function updateCounterText(newValue, timer) {
 }
 
 /**
+ * Changes animation play state based on window focus
+ *
+ * @param {HTMLElement} elem - element to play/pause animation on
+ */
+function handleAnimation(elem) {
+  if (document.hidden && elem.style.animationPlayState !== "paused") {
+    elem.style.animationPlayState = "paused";
+  }
+  else if (!document.hidden && elem.style.animationPlayState === "paused") {
+    elem.style.animationPlayState = "running";
+  }
+}
+
+/**
  * Cancel button handler -- closes the current tab, instead of redirecting
  * to the originalUrl.
  *
@@ -88,6 +107,6 @@ const cancelButton = document.querySelector("#cancel-button");
 console.log(cancelButton)
 cancelButton.addEventListener("click", handleCancelButton);
 
-const delay = 5000;
+const delay = 8000;
 
 startCountdownTimer(delay);
