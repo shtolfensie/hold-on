@@ -1,12 +1,141 @@
-<html>
-  <body>
-    <div>Hold on</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #001f3f;
+            /* background-color: #00556F; */
+            /* background-color: #003366; */
+            /* background-color: #001f3f; */
+            /* background-color: #001f3f; */
+            /* background-color: #001f3f; */
+            font-family: 'Arial', sans-serif;
+        }
 
-    <div>Just a sec</div>
-    <div id="timer">5</div>
+        .container {
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-around;
+        }
 
+        .upper-text-container {
+          color: white;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        #timer-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        #timer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: #378BFF;
+            /* color: #477db5; */
+        }
+
+        .breathing-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #007BFF;
+            opacity: 0.2;
+            animation: breathing-animation 5s infinite ease-in-out;
+        }
+
+        .inner-bg-circle {
+            /* background-color: #D3D3D3; */
+            /* background-color: #B0C4DE; */
+            /* background-color: #01183f; */
+            background-color: #0151a3;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: 40%;
+            border-radius: 50%;
+            opacity: 0.25;
+        }
+
+        @keyframes breathing-animation {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+        }
+
+        .cancel-button {
+          background-color: white;
+          border-radius: 12px;
+          border: none;
+          padding: 0.5rem 1rem;
+          cursor: pointer;
+          transition: box-shadow 0.3s;
+        }
+
+        .cancel-button:hover {
+          /* box-shadow: 0 0 10px #3498db, 0 0 20px #3498db, 0 0 30px #3498db; */
+          /* box-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.7); */
+          box-shadow: 0 0 5px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.3), 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+      <div class="upper-text-container">
+        <div>Hold on...</div>
+        <div>Just a sec</div>
+      </div>
+
+      <div id="timer-container">
+
+        <div class="breathing-circle"></div>
+        <div class="inner-bg-circle"></div>
+
+
+        <div id="timer">5</div>
+
+      </div>
+
+      <div class="upper-text-container">
+        <button class="cancel-button" id="cancel-button">Let's go somewhere else</button>
+      </div>
+
+    </div>
 
 
     <script src="url-blocker.js"></script>
-  </body>
+</body>
 </html>

@@ -68,10 +68,25 @@ function updateCounterText(newValue, timer) {
   timer.innerHTML = newValue;
 }
 
+/**
+ * Cancel button handler -- closes the current tab, instead of redirecting
+ * to the originalUrl.
+ *
+ * @param {MouseEvent} e - click event
+ */
+function handleCancelButton(e) {
+  e.preventDefault();
+  window.close();
+}
+
 const currentURL = new URL(document.URL.toString())
 const originalUrl = decodeURIComponent(currentURL.searchParams.get("url"))
 console.log('current URL:', currentURL);
 console.log('Original URL:', originalUrl);
+
+const cancelButton = document.querySelector("#cancel-button");
+console.log(cancelButton)
+cancelButton.addEventListener("click", handleCancelButton);
 
 const delay = 5000;
 
