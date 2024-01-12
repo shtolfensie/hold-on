@@ -22,7 +22,7 @@ Steps to install it in your browser (replace `brave` with your browser):
 - [ ] count website visits
 - [ ] count time spent on website
 - [ ] add breathing animation to delay page
-- [ ] add "abort" button to delay page
+- [x] add "abort" button to delay page
 - [ ] delay page extensions
     - make it possible to display arbitrary components on the delay page
     - e.g. TODO list, agenda (calendar), number of visits, list of open projects, ...
